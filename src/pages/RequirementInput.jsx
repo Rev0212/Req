@@ -25,6 +25,7 @@ import SendIcon from '@mui/icons-material/Send';
 
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
+import FileUploadProgress from '../components/RequirementInput/FileUploadProgress';
 
 const RequirementInput = ({ onLogout }) => {
   const navigate = useNavigate();
@@ -34,6 +35,7 @@ const RequirementInput = ({ onLogout }) => {
   const [urlInput, setUrlInput] = useState('');
   const [isRecording, setIsRecording] = useState(false);
   const [alert, setAlert] = useState(null);
+  const [uploadedFiles, setUploadedFiles] = useState([]);
 
   const handleTabChange = (event, newValue) => {
     setActiveTab(newValue);
@@ -55,10 +57,19 @@ const RequirementInput = ({ onLogout }) => {
   };
 
   const handleFileUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setFileUploaded(file);
-      setAlert({ severity: 'info', message: `File "${file.name}" ready for processing` });
+    const files = event.target.files;
+    if (files) {
+      const filesWithIds = Array.from(files).map((file, index) => ({
+        id: Date.now() + index,
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        file: file
+      }));
+      
+      setUploadedFiles(prev => [...filesWithIds, ...prev]);
+      setFileUploaded(files[0]);
+      setAlert({ severity: 'info', message: `File "${files[0].name}" ready for processing` });
     }
   };
 
@@ -161,7 +172,6 @@ const RequirementInput = ({ onLogout }) => {
                   <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                     <Button 
                       variant="contained"
-
                       color="primary" 
                       endIcon={<SendIcon />}
                       onClick={handleManualSubmit}
@@ -219,6 +229,9 @@ const RequirementInput = ({ onLogout }) => {
                       Process File
                     </Button>
                   </Box>
+                  {uploadedFiles.length > 0 && (
+                    <FileUploadProgress files={uploadedFiles} />
+                  )}
                 </Box>
               )}
               

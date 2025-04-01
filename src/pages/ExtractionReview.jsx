@@ -107,6 +107,7 @@ const ExtractionReview = ({ onLogout }) => {
   const [newRequirement, setNewRequirement] = useState('');
   const [newType, setNewType] = useState('functional');
   const [alert, setAlert] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleVerify = (id, reqType) => {
     if (reqType === 'functional') {
@@ -195,16 +196,31 @@ const ExtractionReview = ({ onLogout }) => {
   };
 
   const handleProceed = () => {
-    // Check if all requirements are verified
     const allVerified = [...functional, ...nonFunctional].every(req => req.isVerified);
     
     if (!allVerified) {
-      setAlert({ severity: 'warning', message: 'Some requirements are not verified. Please verify all requirements before proceeding.' });
+      setAlert({ 
+        severity: 'warning', 
+        message: 'Please verify all requirements before proceeding.' 
+      });
       return;
     }
+  
+    // Save requirements to localStorage for persistence
+    localStorage.setItem('requirements', JSON.stringify({
+      functional,
+      nonFunctional,
+      documentId: id
+    }));
+  
+    // Add loading state
+    setIsLoading(true);
     
-    // Navigate to prioritization page
-    navigate(`/prioritization/${id}`);
+    // Simulate processing delay
+    setTimeout(() => {
+      setIsLoading(false);
+      navigate(`/prioritization/${id}`);
+    }, 1000);
   };
 
   const handleTypeChange = (event, newType) => {

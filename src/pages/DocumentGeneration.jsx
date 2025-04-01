@@ -34,6 +34,8 @@ import ShareIcon from '@mui/icons-material/Share';
 
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
+import CollaborativeEditing from '../components/DocumentGeneration/CollaborativeEditing';
+import DocumentComments from '../components/DocumentGeneration/DocumentComments';
 
 // Mock data for requirements
 const requirementsData = [
@@ -408,7 +410,11 @@ const DocumentGeneration = ({ onLogout }) => {
             </CardContent>
           </Card>
         </Box>
+        <Paper elevation={2} sx={{ mt: 4, p: 3 }}>
+          <DocumentComments documentId={id} />
+        </Paper>
       </Box>
+      <CollaborativeEditing documentId={id} />
     </Box>
   );
 };

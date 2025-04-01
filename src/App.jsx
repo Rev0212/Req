@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, lazy, Suspense } from 'react'
 import './App.css'
 
 // Pages
@@ -14,30 +14,114 @@ import Analytics from './pages/Analytics'
 import Settings from './pages/Settings'
 import ForgotPassword from './pages/ForgotPassword'
 import ProtectedRoute from './components/ProtectedRoute'
+import AIChatAssistant from './components/AIChatAssistant'
+import OnboardingTutorial from './components/OnboardingTutorial';
+
+// Lazy-loaded components
+const OnboardingTutorialLazy = lazy(() => import('./components/OnboardingTutorial'));
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [showTutorial, setShowTutorial] = useState(false);
 
   useEffect(() => {
-    // Check if user is logged in from localStorage
-    const user = localStorage.getItem('user');
-    if (user) {
-      setIsAuthenticated(true);
-    }
+    // Simulate a real authentication check with a slight delay
+    const checkAuthStatus = async () => {
+      setLoading(true);
+      // Simulate API call delay
+      await new Promise(resolve => setTimeout(resolve, 800));
+      
+      const user = localStorage.getItem('user');
+      if (user) {
+        setIsAuthenticated(true);
+        setShowTutorial(true); // Show tutorial after authentication
+      }
+      setLoading(false);
+    };
+    
+    checkAuthStatus();
   }, []);
 
-  const handleLogin = () => {
+  // Add useEffect to check if it's the user's first login
+  useEffect(() => {
+    const hasSeenTutorial = localStorage.getItem('hasSeenTutorial');
+    if (isAuthenticated && !hasSeenTutorial) {
+      setShowTutorial(true);
+    }
+  }, [isAuthenticated]);
+
+  const handleLogin = async (userCredentials) => {
+    // Simulate API login delay
+    await new Promise(resolve => setTimeout(resolve, 1200));
+        
     setIsAuthenticated(true);
-    localStorage.setItem('user', JSON.stringify({ email: 'user@example.com' }));
+    localStorage.setItem('user', JSON.stringify({ 
+      email: userCredentials?.email || 'user@example.com',
+      name: userCredentials?.name || 'User',
+      lastLogin: new Date().toISOString()
+    }));
+    setShowTutorial(true); // Show tutorial after login
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    // Simulate API logout delay
+    await new Promise(resolve => setTimeout(resolve, 800));
+    
     setIsAuthenticated(false);
     localStorage.removeItem('user');
   };
 
+  const handleCloseTutorial = () => {
+    setShowTutorial(false);
+    localStorage.setItem('hasSeenTutorial', 'true');
+  };
+
+  // Show a loading indicator while checking authentication
+  if (loading) {
+    return (
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        height: '100vh',
+        flexDirection: 'column',
+        backgroundColor: '#f5f5f5'
+      }}>
+        <div style={{ 
+          width: '40px', 
+          height: '40px', 
+          border: '4px solid #f3f3f3',
+          borderTop: '4px solid #6200ea',
+          borderRadius: '50%',
+          animation: 'spin 1s linear infinite',
+          marginBottom: '16px'
+        }} />
+        <p>Loading application...</p>
+        <style>{`
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        `}</style>
+      </div>
+    );
+  }
+
   return (
     <Router>
+      {isAuthenticated && <AIChatAssistant />}
+      
+      {/* Wrap lazy-loaded components in Suspense */}
+      <Suspense fallback={<div>Loading...</div>}>
+        {isAuthenticated && (
+          <OnboardingTutorialLazy 
+            open={showTutorial} 
+            onClose={handleCloseTutorial} 
+          />
+        )}
+      </Suspense>
+      
       <Routes>
         <Route path="/login" element={
           isAuthenticated ? <Navigate to="/dashboard" /> : <Login onLogin={handleLogin} />
@@ -82,7 +166,6 @@ function App() {
             <Settings onLogout={handleLogout} />
           </ProtectedRoute>
         } />
-        
         <Route path="/" element={<Navigate to={isAuthenticated ? "/dashboard" : "/login"} />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
@@ -90,4 +173,4 @@ function App() {
   );
 }
 
-export default App
+export default App;

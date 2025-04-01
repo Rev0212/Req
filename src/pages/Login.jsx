@@ -10,11 +10,13 @@ import {
   Divider,
   IconButton,
   InputAdornment,
-  Alert
+  Alert,
+  CircularProgress
 } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import LockIcon from '@mui/icons-material/Lock';
 
 const Login = ({ onLogin }) => {
   const navigate = useNavigate();
@@ -22,9 +24,18 @@ const Login = ({ onLogin }) => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
 
-  const handleLogin = (e) => {
+  const validateEmail = (email) => {
+    return /\S+@\S+\.\S+/.test(email);
+  };
+
+  const handleLogin = async (e) => {
     e.preventDefault();
+    
+    // Reset error
+    setError('');
     
     // Basic validation
     if (!email || !password) {
@@ -32,19 +43,51 @@ const Login = ({ onLogin }) => {
       return;
     }
     
-    // Hardcoded login - in real app this would call an API
-    if (email === 'user@example.com' && password === 'password') {
-      onLogin();
-      navigate('/dashboard');
-    } else {
-      setError('Invalid email or password. Hint: Use user@example.com / password');
+    if (!validateEmail(email)) {
+      setError('Please enter a valid email address');
+      return;
+    }
+    
+    if (password.length < 6) {
+      setError('Password should be at least 6 characters long');
+      return;
+    }
+    
+    setLoading(true);
+    
+    try {
+      // Simulate API call with a delay
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      // Hardcoded login - in real app this would call an API
+      if (email === 'user@example.com' && password === 'password') {
+        await onLogin({ email });
+        navigate('/dashboard');
+      } else {
+        setError('Invalid email or password. Hint: Use user@example.com / password');
+      }
+    } catch (error) {
+      setError('Login failed. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleGoogleLogin = () => {
-    // Simulate Google login
-    onLogin();
-    navigate('/dashboard');
+  const handleGoogleLogin = async () => {
+    setGoogleLoading(true);
+    
+    try {
+      // Simulate Google OAuth delay
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // Simulate successful login
+      await onLogin({ email: 'google.user@gmail.com', name: 'Google User' });
+      navigate('/dashboard');
+    } catch (error) {
+      setError('Google login failed. Please try again.');
+    } finally {
+      setGoogleLoading(false);
+    }
   };
 
   return (
@@ -59,12 +102,15 @@ const Login = ({ onLogin }) => {
     >
       <Card sx={{ maxWidth: 450, width: '100%', p: 2 }}>
         <CardContent>
-          <Typography variant="h4" align="center" gutterBottom>
-            Req Extract
-          </Typography>
-          <Typography variant="body1" align="center" color="textSecondary" gutterBottom>
-            AI-Powered Requirement Extraction System
-          </Typography>
+          <Box sx={{ textAlign: 'center', mb: 3 }}>
+            <LockIcon sx={{ fontSize: 40, color: 'primary.main', mb: 1 }} />
+            <Typography variant="h4" gutterBottom>
+              Req Extract
+            </Typography>
+            <Typography variant="body1" color="textSecondary">
+              AI-Powered Requirement Extraction System
+            </Typography>
+          </Box>
           
           {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
           
@@ -77,6 +123,15 @@ const Login = ({ onLogin }) => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               type="email"
+              disabled={loading || googleLoading}
+              error={error.includes('email')}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    @
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
               label="Password"
@@ -86,12 +141,15 @@ const Login = ({ onLogin }) => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               type={showPassword ? 'text' : 'password'}
+              disabled={loading || googleLoading}
+              error={error.includes('password')}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton
                       onClick={() => setShowPassword(!showPassword)}
                       edge="end"
+                      disabled={loading || googleLoading}
                     >
                       {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
                     </IconButton>
@@ -113,8 +171,9 @@ const Login = ({ onLogin }) => {
               fullWidth
               size="large"
               sx={{ mb: 2 }}
+              disabled={loading || googleLoading}
             >
-              Login
+              {loading ? <CircularProgress size={24} color="inherit" /> : 'Login'}
             </Button>
           </form>
           
@@ -123,11 +182,12 @@ const Login = ({ onLogin }) => {
           <Button
             variant="outlined"
             fullWidth
-            startIcon={<GoogleIcon />}
+            startIcon={googleLoading ? <CircularProgress size={20} /> : <GoogleIcon />}
             onClick={handleGoogleLogin}
             sx={{ mb: 2 }}
+            disabled={loading || googleLoading}
           >
-            Login with Google
+            {googleLoading ? 'Connecting...' : 'Login with Google'}
           </Button>
           
           <Box sx={{ textAlign: 'center', mt: 2 }}>
