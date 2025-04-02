@@ -41,8 +41,8 @@ const Settings = ({ onLogout }) => {
   const [templateFormat, setTemplateFormat] = useState('standard');
   const [alert, setAlert] = useState(null);
   const [currentUser] = useState({
-    name: 'John Doe',
-    email: 'john.doe@example.com',
+    name: 'Rishi',
+    email: 'rishi@example.com',
     role: 'admin',
     department: 'Engineering'
   });

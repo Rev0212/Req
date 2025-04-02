@@ -53,7 +53,7 @@ const DocumentComments = ({ documentId }) => {
         {
           id: 2,
           text: 'Performance requirement PR-003 is too vague. Needs more clarity.',
-          author: 'John Doe',
+          author: 'Rishi',
           avatar: 'J',
           timestamp: new Date('2025-03-30T16:00:00'),
           resolved: false,

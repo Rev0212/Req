@@ -17,7 +17,7 @@ const CollaborativeEditing = ({ documentId }) => {
       
       setActiveUsers([
         { id: 1, name: 'Alex Kim', avatar: 'AK', status: 'editing', section: 'Security Requirements' },
-        { id: 2, name: 'John Doe', avatar: 'JD', status: 'viewing' },
+        { id: 2, name: 'Rishi', avatar: 'JD', status: 'viewing' },
         { id: 3, name: 'Sarah Lee', avatar: 'SL', status: 'idle' }
       ]);
     };

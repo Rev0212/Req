@@ -39,7 +39,7 @@ const DocumentComments = () => {
       const demoComments = [
         {
           id: 1,
-          author: 'John Doe',
+          author: 'Rishi',
           authorAvatar: 'J',
           date: '2025-04-01 14:30',
           text: 'I think we need more detail in the security requirements section. Can we specify the encryption standards?',

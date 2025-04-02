@@ -41,7 +41,7 @@ const DocumentVersionHistory = ({ documentTitle }) => {
           id: 5, 
           version: "1.4",
           date: "2025-04-01 15:32",
-          author: "John Doe",
+          author: "Rishi",
           authorAvatar: "J",
           changes: [
             { type: "added", text: "Added 2 security requirements" },
@@ -73,7 +73,7 @@ const DocumentVersionHistory = ({ documentTitle }) => {
           id: 2, 
           version: "1.1",
           date: "2025-03-25 14:22",
-          author: "John Doe",
+          author: "Rishi",
           authorAvatar: "J",
           changes: [
             { type: "modified", text: "Refined user authentication flow" },
@@ -84,7 +84,7 @@ const DocumentVersionHistory = ({ documentTitle }) => {
           id: 1, 
           version: "1.0",
           date: "2025-03-23 10:05",
-          author: "John Doe",
+          author: "Rishi",
           authorAvatar: "J",
           changes: [
             { type: "added", text: "Initial document creation" }
