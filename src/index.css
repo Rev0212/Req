@@ -2,11 +2,9 @@
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
   color-scheme: light;
   color: #333333;
   background-color: #f5f5f5;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -15,158 +13,148 @@
 
 a {
   font-weight: 500;
-  color: #6200ea; /* Vibrant purple for links */ /* Vibrant purple for links */
-  text-decoration: inherit;
+  color: #6200ea; /* Vibrant purple for links */
+  text-decoration: none;
 }
+
 a:hover {
-  color: #9d46ff; /* Lighter purple on hover */ /* Lighter purple on hover */
+  color: #9d46ff; /* Lighter purple on hover */
 }
 
 body {
   margin: 0;
-  min-width: 320px;  min-width: 320px;
+  min-width: 320px;
   min-height: 100vh;
 }
 
-h1 {h1 {
+h1 {
   font-size: 3.2em;
   line-height: 1.1;
-  color: #00bcd4; /* Vibrant teal for headers */headers */
+  color: #00bcd4; /* Vibrant teal for headers */
 }
 
-button {button {
-  border-radius: 8px;order-radius: 8px;
-  border: 1px solid transparent; transparent;
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1em;
-  font-weight: 500; font-weight: 500;
-  font-family: inherit;mily: inherit;
-  background-color: #6200ea; /* Vibrant purple background */und */
-  color: white; color: white;
-  cursor: pointer;  cursor: pointer;
-  transition: all 0.2s ease-in-out;sition: all 0.2s ease-in-out;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #6200ea; /* Vibrant purple */
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
+
 button:hover {
-  background-color: #7c4dff; /* Lighter purple on hover */c4dff; /* Lighter purple on hover */
-  transform: translateY(-2px);ateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);8px rgba(0, 0, 0, 0.1);
-}
-button:focus,button:focus,
-button:focus-visible {on:focus-visible {
-  outline: 3px solid #b388ff; /* Light purple outline */d #b388ff; /* Light purple outline */
+  background-color: #7c4dff; /* Lighter purple */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-#root {root {
-  width: 100%;  width: 100%;
+button:focus,
+button:focus-visible {
+  outline: 3px solid #b388ff; /* Light purple */
 }
 
-/* Custom colors for components */*/
+#root {
+  width: 100%;
+}
+
+/* Custom colors */
 .success-color {
-  color: #00c853; /* Vibrant green */ /* Vibrant green */
+  color: #00c853;
 }
 
 .warning-color {
-  color: #ffab00; /* Vibrant amber */
+  color: #ffab00;
 }
 
-.error-color {error-color {
-  color: #ff3d00; /* Vibrant deep orange */00; /* Vibrant deep orange */
+.error-color {
+  color: #ff3d00;
 }
 
 .info-color {
-  color: #00b0ff; /* Vibrant light blue */ibrant light blue */
+  color: #00b0ff;
 }
 
-/* Color overrides for Material UI *//* Color overrides for Material UI */
+/* Material UI Overrides */
 .MuiButton-containedPrimary {
-  background-color: #6200ea !important;und-color: #6200ea !important;
+  background-color: #6200ea !important;
 }
 
-.MuiButton-containedPrimary:hover {iButton-containedPrimary:hover {
-  background-color: #7c4dff !important;d-color: #7c4dff !important;
+.MuiButton-containedPrimary:hover {
+  background-color: #7c4dff !important;
 }
 
-.MuiButton-outlinedPrimary {-outlinedPrimary {
+.MuiButton-outlinedPrimary {
   color: #6200ea !important;
-  border-color: #6200ea !important;order-color: #6200ea !important;
+  border-color: #6200ea !important;
 }
 
-.MuiButton-outlinedPrimary:hover {.MuiButton-outlinedPrimary:hover {
-  background-color: rgba(98, 0, 234, 0.04) !important;ground-color: rgba(98, 0, 234, 0.04) !important;
+.MuiButton-outlinedPrimary:hover {
+  background-color: rgba(98, 0, 234, 0.04) !important;
 }
 
-/* Dashboard card colors */rs */
-.dashboard-stat-card-1 {d-1 {
-  background: linear-gradient(135deg, #00b0ff 0%, #0091ea 100%) !important;-gradient(135deg, #00b0ff 0%, #0091ea 100%) !important;
-  color: white !important; color: white !important;
-}}
-
-.dashboard-stat-card-2 {d-2 {
-  background: linear-gradient(135deg, #00c853 0%, #00a839 100%) !important;r-gradient(135deg, #00c853 0%, #00a839 100%) !important;
-  color: white !important; color: white !important;
-}}
-
-.dashboard-stat-card-3 {3 {
-  background: linear-gradient(135deg, #ff3d00 0%, #dd2c00 100%) !important;5deg, #ff3d00 0%, #dd2c00 100%) !important;
-  color: white !important;nt;
+/* Dashboard card colors */
+.dashboard-stat-card-1 {
+  background: linear-gradient(135deg, #00b0ff 0%, #0091ea 100%) !important;
+  color: white !important;
 }
 
-.dashboard-stat-card-4 {{
-  background: linear-gradient(135deg, #ffab00 0%, #ff9100 100%) !important;t(135deg, #ffab00 0%, #ff9100 100%) !important;
-  color: white !important;portant;
+.dashboard-stat-card-2 {
+  background: linear-gradient(135deg, #00c853 0%, #00a839 100%) !important;
+  color: white !important;
 }
 
-/* Sidebar theme */me */
+.dashboard-stat-card-3 {
+  background: linear-gradient(135deg, #ff3d00 0%, #dd2c00 100%) !important;
+  color: white !important;
+}
+
+.dashboard-stat-card-4 {
+  background: linear-gradient(135deg, #ffab00 0%, #ff9100 100%) !important;
+  color: white !important;
+}
+
+/* Sidebar theme */
 .MuiDrawer-paper {
-  background: linear-gradient(180deg, #6200ea 0%, #3700b3 100%) !important; background: linear-gradient(180deg, #6200ea 0%, #3700b3 100%) !important;
-  color: white !important;e !important;
+  background: linear-gradient(180deg, #6200ea 0%, #3700b3 100%) !important;
+  color: white !important;
 }
 
-/* Override for priority colors */* Override for priority colors */
-.priority-must {.priority-must {
-  background-color: #f50057 !important; /* Vibrant pink */; /* Vibrant pink */
+/* Priority colors */
+.priority-must {
+  background-color: #f50057 !important;
 }
 
 .priority-should {
-  background-color: #ffab00 !important; /* Vibrant amber */ackground-color: #ffab00 !important; /* Vibrant amber */
+  background-color: #ffab00 !important;
 }
 
-.priority-could {iority-could {
-  background-color: #00b0ff !important; /* Vibrant light blue */nd-color: #00b0ff !important; /* Vibrant light blue */
+.priority-could {
+  background-color: #00b0ff !important;
 }
 
-.priority-wont {priority-wont {
-  background-color: #757575 !important; /* Grey */  background-color: #757575 !important; /* Grey */
+.priority-wont {
+  background-color: #757575 !important;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-}  }    background-color: #9d46ff;  button:hover {    }    background-color: #7c4dff; /* Lighter purple for dark mode */  button {    }    color: #00e5ff; /* Brighter teal for dark mode */  h1 {    }    background-color: #212121;    color: #f5f5f5;  :root {@media (prefers-color-scheme: dark) {}}
-
+/* Dark mode */
 @media (prefers-color-scheme: dark) {
   :root {
     color: #f5f5f5;
     background-color: #212121;
   }
-  
+
   h1 {
-    color: #00e5ff; /* Brighter teal for dark mode */
+    color: #00e5ff;
   }
-  
+
   button {
-    background-color: #7c4dff; /* Lighter purple for dark mode */
+    background-color: #7c4dff;
   }
-  
+
   button:hover {
     background-color: #9d46ff;
   }
